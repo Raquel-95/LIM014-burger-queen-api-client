@@ -25,8 +25,9 @@ export default {
 <style>
 .home {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-content: center;
+  margin-top: 100px;
 }
 
 .input_user{
@@ -45,6 +46,12 @@ export default {
 img{
   height: 350px;
   width: 350px;
+  margin-left: 150px;
+}
+
+form {
+  margin-top: 50px;
+  margin-right: 200px;
 }
 
 </style>

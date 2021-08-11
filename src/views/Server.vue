@@ -8,9 +8,9 @@
 
     <h1>Esta es la pagina de pedidos.</h1>
     <div class="user_pedido">
-      <p>Nombre del cliente</p>
+      <p>Nombre del cliente: </p>
         <input type="text" id="name_client">
-        <p>N° Mesa</p>
+        <p>N° Mesa: </p>
         <input type="text" id="nmesa_client">
     </div>
     <p></p>
