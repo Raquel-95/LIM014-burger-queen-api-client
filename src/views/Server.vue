@@ -14,13 +14,82 @@
         <input type="text" id="nmesa_client">
     </div>
     <p></p>
-    <button id= "btn_enviarchef">ENVIAR A CHEF</button>
+    
+    <h3>DESAYUNO</h3>
+    <el-table
+      :data="products"
+      style="width: 100%">
+      <el-table-column
+        prop="name"
+        label="Item"
+        width="180">
+      
+      </el-table-column>
+      <el-table-column
+        prop="price"
+        label="Precio"
+        width="180">
+        <template slot-scope="{ row }">
+          <p> $ {{ row.price }} </p>
+        </template>
+      </el-table-column>
+    </el-table>
 
+<h3>ALMUERZO Y CENA</h3>
+    <el-table
+      :data="products"
+      style="width: 100%">
+      <el-table-column
+        prop="name"
+        label="Item"
+        width="180">
+      
+      </el-table-column>
+      <el-table-column
+        prop="price"
+        label="Precio"
+        width="180">
+        <template slot-scope="{ row }">
+          <p> $ {{ row.price }} </p>
+        </template>
+      </el-table-column>
+    </el-table>
+
+
+    <button id= "btn_enviarchef">ENVIAR A CHEF</button>
+    <!-- <ul>
+      <li v-for="(item, index) in products" :key="index">
+         {{ index }} {{ item.name }}
+      </li>
+    </ul> -->
   </div>
 </template>
 
 <script>
 
+import {productsServices} from '../services/ProductService'
+  export default {
+    async mounted()
+    {
+      let products = await productsServices.getProducts()
+    
+      this.products = products;/* products.map((item)=>{
+        return item.name;
+      })*/
+      console.log(products);
+      // console.log(this.$http.defaults.headers.common['APIKEY'])
+      // ,{headers : {'Authorization': 'Bearer ' + localStorage.getItem('token')}}
+      // await this.$http.get('/products')
+      // .then(response => {
+      //   this.products = response.data;
+      // });
+    },
+    data(){
+      return {
+        products: {}
+      }
+    }
+  }
 </script>
 
 <style scoped>
