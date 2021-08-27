@@ -9,8 +9,9 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
-axios.defaults.baseURL = 'https://rociovalentin.herokuapp.com'
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
+axios.defaults.baseURL = 'https://nodejs-bq-api.herokuapp.com'
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token"); // Setear el token directo del localstorage
+// migrar al sesionstorage, se usa para guardar datos del usuario en sesion
 
 
 Vue.use(ElementUI)

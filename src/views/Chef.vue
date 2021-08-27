@@ -10,6 +10,19 @@
 </template>
 <script>
 
+  export default { 
+    data(){
+      return {
+      
+      }
+    },
+    methods: {
+      async logout(){
+          localStorage.removeItem('token')
+          this.$router.push('/')
+      },
+    }
+  }
 </script>
 
 <style scoped>

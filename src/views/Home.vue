@@ -26,27 +26,13 @@ export default {
   methods: {
     async login()
     {
-      let token = await userService.login(this.usuario, this.clave);
-      this.$router.push('/admin')
-      console.log(token);
-      console.log(userService.token);
-      // let payload = {
-      //   email: this.usuario,
-      //   password: this.clave
-      // };
-      // await this.$http.post('/auth',payload) // consultas en un archivo aparte.
-      // .then(response => {
-      //   // console.log(response);
-      //   localStorage.setItem('token', response.data.token)
-      //   this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token; // defaults para definir el valor por defecto, definimos la cabecera 'Authorization' con un valor por defecto. 
-      //   this.$router.push('/admin')
-      // })
-      // .catch(error => {
-      //   console.log('paso algo malo');
-      //   console.log(error);
-      //   // let data = error.response.data; // la respuesta json que devuelve el error se almacena en error.response.data
-      //   // M.toast({html: data.message }) // para ver el mensaje de error que me esta devolviendo
-      // });
+      try {
+        let token = await userService.login(this.usuario, this.clave);
+        this.$router.push('/admin')
+        console.log(token);
+      } catch (error) {
+        console.log('error: ', error)
+      }
     },
 
   }

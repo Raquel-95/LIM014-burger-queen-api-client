@@ -13,35 +13,24 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin.vue'),
+    component: () => import('../views/Admin.vue'),
     props: true //puede recibir props.
   },
   {
     path: '/chef',
     name: 'Chef',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Chef.vue')
+  
+    component: () => import('../views/Chef.vue')
   },
   {
     path: '/server',
     name: 'Server',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Server.vue')
+    component: () => import('../views/Server.vue')
   },
   {
     path: '*',
     name: 'NotFound',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/NotFound.vue')
+    component: () => import('../views/NotFound.vue')
   }
 ]
 

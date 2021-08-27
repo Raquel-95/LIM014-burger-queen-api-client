@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {userService} from '../services/UsersService'
 
 class ProductServices {
     constructor(token) {
@@ -7,11 +6,14 @@ class ProductServices {
     }
 
     async getProducts(){
-        console.log("product servics " + userService.token);
         let response = await axios.get('/products')
         return response.data
-        // console.log(response);
         }
+
+    async createProduct(name, price, type){
+      let response = await axios.post('/products', {name, price, type})
+      return response.data
+    }
 }
 
 const productsServices = new ProductServices();

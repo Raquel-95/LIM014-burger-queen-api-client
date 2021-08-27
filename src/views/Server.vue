@@ -2,7 +2,7 @@
   <div class="about">
     <header>
       <img alt="Vue logo" src="../assets/logo_bq.png" class="logo_header">
-      <button class="btn_singoff">Cerrar sesion</button>
+      <button v-on:click="logout" class="btn_singoff">Cerrar sesion</button>
       <img alt="Icono Admin" src="../assets/icon_server.png" id="logo_server">
     </header>
 
@@ -15,7 +15,7 @@
     </div>
     <p></p>
     
-    <h3>DESAYUNO</h3>
+    <h3>DESAYUNOS</h3>
     <el-table
       :data="products"
       style="width: 100%">
@@ -57,11 +57,6 @@
 
 
     <button id= "btn_enviarchef">ENVIAR A CHEF</button>
-    <!-- <ul>
-      <li v-for="(item, index) in products" :key="index">
-         {{ index }} {{ item.name }}
-      </li>
-    </ul> -->
   </div>
 </template>
 
@@ -72,22 +67,18 @@ import {productsServices} from '../services/ProductService'
     async mounted()
     {
       let products = await productsServices.getProducts()
-    
-      this.products = products;/* products.map((item)=>{
-        return item.name;
-      })*/
-      console.log(products);
-      // console.log(this.$http.defaults.headers.common['APIKEY'])
-      // ,{headers : {'Authorization': 'Bearer ' + localStorage.getItem('token')}}
-      // await this.$http.get('/products')
-      // .then(response => {
-      //   this.products = response.data;
-      // });
+      this.products = products;
     },
     data(){
       return {
         products: {}
       }
+    },
+    methods: {
+      async logout(){
+          localStorage.removeItem('token')
+          this.$router.push('/')
+      },
     }
   }
 </script>
