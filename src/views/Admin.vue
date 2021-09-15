@@ -2,7 +2,7 @@
   <div class="about">
     <header>
       <img alt="Vue logo" src="../assets/logo_bq.png" class="logo_header">
-      <button v-on:click="logout" class="btn_singoff">Cerrar sesion</button>
+      <el-button v-on:click="logout" type="info" round>Cerrar sesion</el-button>
       <img alt="Icono Admin" src="../assets/icon_admin.png" id="logo_admin">
     </header>
     <el-row>
@@ -12,11 +12,11 @@
 
     <span v-show=showProducts> 
       <h3>PRODUCTOS</h3>
-      <el-button type="success" class="el-icon-circle-plus-outline">Agregar producto </el-button>
+      <el-button type="success" class="el-icon-circle-plus-outline" v-on:click="toggleAddProduct">Agregar producto </el-button>
       
       <!-- Formulario para agregar un producto -->
       
-     <el-form ref="form" :model="form" label-width="120px">
+     <el-form ref="form" :model="form" label-width="120px" v-show="showFormProd">
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
@@ -28,8 +28,8 @@
       </el-form-item>
       
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button>Cancel</el-button>
+        <el-button type="primary" v-on:click="onSubmitProduct">Crear</el-button>
+        <el-button>Cancelar</el-button>
       </el-form-item>
     </el-form>
       <!--  -->
@@ -75,28 +75,25 @@
 
   <span v-show=showUsers> 
       <h3>TRABAJADORES</h3>
-      <el-button type="success" class="el-icon-circle-plus-outline">Agregar usuario</el-button>
+      <el-button type="success" class="el-icon-circle-plus-outline" v-on:click="toggleAddUser" >Agregar usuario</el-button>
 
       <!-- Formulario para agregar un producto -->
       
-     <el-form ref="form" :model="form" label-width="120px">
+     <el-form ref="form" :model="form" label-width="120px" v-show="showFormUser">
       <el-form-item label="Email">
         <el-input v-model="form.email"></el-input>
       </el-form-item>
       <el-form-item label="Password">
         <el-input v-model="form.password"></el-input>
       </el-form-item>
-       <el-form-item label="Rol">
-        <el-input v-model="form.roles"></el-input>
-      </el-form-item>
       <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.admin">
+        <el-checkbox-group v-model="form.roles">
           <el-checkbox label="Admin" name="type"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button>Cancel</el-button>
+        <el-button type="primary" v-on:click="onSubmitUser">Crear</el-button>
+        <el-button>Cancelar</el-button>
       </el-form-item>
     </el-form>
       <!--  -->
@@ -110,7 +107,7 @@
           </el-table-column>
           <el-table-column
             label="Cargo"
-            prop="roles">
+            prop="roles.admin">
           </el-table-column>
           <el-table-column
             align="right">
@@ -143,8 +140,13 @@ import {userService} from '../services/UsersService'
 
 
  export default {
+  
    async mounted()
     {
+       if(localStorage.getItem("token") == null) {
+         this.$router.push('/')
+        }
+
       let products = await productsServices.getProducts()
       this.products = products;
       let users = await userService.getUsers()
@@ -157,11 +159,17 @@ import {userService} from '../services/UsersService'
         search: '',
         showProducts: false,
         showUsers: true,
+        showFormProd: false,
+        showFormUser: false,
         form: {
           name: '',
           price: '',
           type: '',
-          admin: ''
+          email: '',
+          password: '',
+          roles : {
+            admin : ''
+          }
         },
       }
     },
@@ -171,6 +179,21 @@ import {userService} from '../services/UsersService'
         console.log(index, row);
       },
       handleDelete(index, row) {
+        this.$confirm('¿Estas seguro que quieres eliminar esto?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Eliminado'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Cancelado'
+          });          
+        });
         console.log(index, row);
       },
       toggleShowProducts() {
@@ -181,9 +204,28 @@ import {userService} from '../services/UsersService'
         this.showUsers = !this.showUsers
         this.showProducts = !this.showUsers
       },
-      async onSubmit() {
+      toggleAddProduct () {
+        this.showFormProd = !this.showFormProd
+      },
+      toggleAddUser () {
+        this.showFormUser = !this.showFormUser
+      },
+      async onSubmitProduct() {
           try {
-          await productsServices.createProduct((this.form.name, this.form.price, this.form.type));
+          // console.log(this.form)
+          let newProduct = await productsServices.createProduct(this.form);
+          this.products.push(newProduct)
+          this.form = "";
+        } catch (error) {
+          console.log('error: ', error)
+        }
+      },
+      async onSubmitUser() {
+          try {
+            console.log(this.form)
+          let newUser = await userService.createUser(this.form);
+          this.users.push(newUser)
+          this.form = "";
         } catch (error) {
           console.log('error: ', error)
         }
@@ -192,6 +234,7 @@ import {userService} from '../services/UsersService'
           localStorage.removeItem('token')
           this.$router.push('/')
       },
+      
     },
   }
 </script>
@@ -209,9 +252,5 @@ import {userService} from '../services/UsersService'
     width: 80px;
   }
 
-  .btn_singoff{
-    height: 30px;
-    width: 100px;
-  }
 
 </style>

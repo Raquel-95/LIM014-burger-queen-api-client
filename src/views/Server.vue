@@ -5,15 +5,6 @@
       <button v-on:click="logout" class="btn_singoff">Cerrar sesion</button>
       <img alt="Icono Admin" src="../assets/icon_server.png" id="logo_server">
     </header>
-
-    <h1>Esta es la pagina de pedidos.</h1>
-    <div class="user_pedido">
-      <p>Nombre del cliente: </p>
-        <input type="text" id="name_client">
-        <p>N° Mesa: </p>
-        <input type="text" id="nmesa_client">
-    </div>
-    <p></p>
     
     <h3>DESAYUNOS</h3>
     <el-table
@@ -55,7 +46,12 @@
       </el-table-column>
     </el-table>
 
-
+    <div class="user_pedido">
+      <p>Nombre del cliente: </p>
+        <input type="text" id="name_client">
+        <p>N° Mesa: </p>
+        <input type="text" id="nmesa_client">
+    </div>
     <button id= "btn_enviarchef">ENVIAR A CHEF</button>
   </div>
 </template>

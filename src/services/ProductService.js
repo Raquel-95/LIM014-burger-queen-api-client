@@ -6,12 +6,12 @@ class ProductServices {
     }
 
     async getProducts(){
-        let response = await axios.get('/products')
+        let response = await axios.get('/products?limit=100')
         return response.data
         }
 
-    async createProduct(name, price, type){
-      let response = await axios.post('/products', {name, price, type})
+    async createProduct(producto){
+      let response = await axios.post('/products', producto)
       return response.data
     }
 }
