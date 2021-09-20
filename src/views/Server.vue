@@ -8,7 +8,7 @@
     
     <h3>DESAYUNOS</h3>
     <el-table
-      :data="products"
+      :data="breakfast"
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -26,9 +26,9 @@
       </el-table-column>
     </el-table>
 
-<h3>ALMUERZO Y CENA</h3>
+    <h3>ALMUERZO Y CENA</h3>
     <el-table
-      :data="products"
+      :data="lunch"
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -45,29 +45,35 @@
         </template>
       </el-table-column>
     </el-table>
-
     <div class="user_pedido">
       <p>Nombre del cliente: </p>
-        <input type="text" id="name_client">
-        <p>N° Mesa: </p>
-        <input type="text" id="nmesa_client">
+            <input type="text" id="name_client">
+      <p>N° Mesa: </p>
+            <input type="text" id="nmesa_client">
     </div>
-    <button id= "btn_enviarchef">ENVIAR A CHEF</button>
+      <button id= "btn_enviarchef">ENVIAR A CHEF</button>
   </div>
 </template>
 
 <script>
 
-import {productsServices} from '../services/ProductService'
+import {productsServices} from '../services/ProductService';
+
+
   export default {
+    
     async mounted()
     {
-      let products = await productsServices.getProducts()
-      this.products = products;
+      let products = await productsServices.getProducts();
+      let breakfast = products.filter(products => products.type == 'desayuno');
+      this.breakfast = breakfast;
+      let lunch = products.filter(products => products.type == 'almuerzo');
+      this.lunch = lunch;
     },
     data(){
       return {
-        products: {}
+        breakfast: {},
+        lunch: {}
       }
     },
     methods: {
