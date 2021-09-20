@@ -5,53 +5,65 @@
       <button v-on:click="logout" class="btn_singoff">Cerrar sesion</button>
       <img alt="Icono Admin" src="../assets/icon_server.png" id="logo_server">
     </header>
-    
-    <h3>DESAYUNOS</h3>
-    <el-table
-      :data="breakfast"
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="Item"
-        width="180">
+    <div id = "server-orders">
       
-      </el-table-column>
-      <el-table-column
-        prop="price"
-        label="Precio"
-        width="180">
-        <template slot-scope="{ row }">
-          <p> $ {{ row.price }} </p>
-        </template>
-      </el-table-column>
-    </el-table>
+        <div id="breakfast"> 
+          <h3>DESAYUNOS</h3>
+          <el-table
+            :data="breakfast"
+            @row-click = 'prodSelect'
+            style="width: 100%">
+            <el-table-column
+              prop="name"
+              label="Item"
+              width="180">
+            </el-table-column>
 
-    <h3>ALMUERZO Y CENA</h3>
-    <el-table
-      :data="lunch"
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="Item"
-        width="180">
+            <el-table-column
+              prop="price"
+              label="Precio"
+              width="180">
+              <template slot-scope="{ row }">
+                <p> $ {{ row.price }} </p>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+
+        <div id="lunch">
+          <h3>ALMUERZO Y CENA</h3>
+          <el-table
+            :data="lunch"
+            @row-click = 'prodSelect'
+            style="width: 100%">
+            <el-table-column
+              prop="name"
+              label="Item"
+              width="180">
+            
+            </el-table-column>
+            <el-table-column
+              prop="price"
+              label="Precio"
+              width="180">
+              <template slot-scope="{ row }">
+                <p> $ {{ row.price }} </p>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       
-      </el-table-column>
-      <el-table-column
-        prop="price"
-        label="Precio"
-        width="180">
-        <template slot-scope="{ row }">
-          <p> $ {{ row.price }} </p>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div class="user_pedido">
-      <p>Nombre del cliente: </p>
-            <input type="text" id="name_client">
-      <p>N° Mesa: </p>
-            <input type="text" id="nmesa_client">
+        <div id="client-order">
+          <div class="user_pedido">
+            <p>Nombre del cliente: </p>
+                  <input type="text" id="name_client">
+            <p>N° Mesa: </p>
+                  <input type="text" id="nmesa_client">
+          </div>
+            <button id= "btn_enviarchef">ENVIAR A CHEF</button>
+        </div> 
     </div>
-      <button id= "btn_enviarchef">ENVIAR A CHEF</button>
+
   </div>
 </template>
 
@@ -81,6 +93,10 @@ import {productsServices} from '../services/ProductService';
           localStorage.removeItem('token')
           this.$router.push('/')
       },
+
+      prodSelect (row) {
+        console.log("seleccionaste este producto " + row.name);
+      }
     }
   }
 </script>
@@ -130,5 +146,26 @@ header{
     width: 180px;
     font-size: 18px;
     color: white;
+  }
+
+  #server-orders {
+    display: flex;
+  }
+
+  #client-order {
+    border-left: solid black;
+    padding: 50px;
+  }
+
+  #lunch {
+    border: solid cornsilk;
+    margin-right: 15px;
+    margin-top: 20px;
+  }
+
+  #breakfast {
+    border: solid cornsilk;
+    margin-right: 15px;
+    margin-top: 20px;
   }
 </style>
